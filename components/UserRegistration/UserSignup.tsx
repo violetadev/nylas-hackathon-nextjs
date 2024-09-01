@@ -1,12 +1,11 @@
 import { useForm } from "react-hook-form";
-import { signUp } from "../../lib/auth";
-import { addUserData, registerParticipant } from "../../lib/helpers";
 import { useGlobalContext } from "../../context/globalContext";
 import { useLocalStorage } from "react-use";
 import { Button, Snackbar, TextField } from "@mui/material";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createContact } from "../../fetch/helpers";
+import { registerParticipant } from "../../lib/helpers";
 
 export const UserSignup = () => {
   const queryClient = useQueryClient();
@@ -15,6 +14,7 @@ export const UserSignup = () => {
     message: "",
   });
   const { setGlobalContext } = useGlobalContext();
+  const [storedUser, setStoredUser] = useLocalStorage<any>("user", null);
   const {
     register,
     handleSubmit,
@@ -25,46 +25,39 @@ export const UserSignup = () => {
   const mutation = useMutation({
     mutationFn: createContact,
     onSuccess: async (data) => {
-      console.log(data, "nylasContact");
-      const user = await registerParticipant(process.env.NEXT_PUBLIC_USER_ID, {
-        passcode: getValues("passcode"),
-        ...data.data,
-        // nylasContactId: nylasContact.id,
-      });
-      console.log(user, "signup");
-      setGlobalContext((prev) => ({ ...prev, user }));
+      try {
+        const user = await registerParticipant(
+          process.env.NEXT_PUBLIC_USER_ID,
+          {
+            passcode: getValues("passcode"),
+            ...data.data,
+          }
+        );
 
+        setGlobalContext((prev) => ({ ...prev, user }));
+        setStoredUser(user);
+
+        setIsToastOpen({
+          isOpen: true,
+          message: "You have been registered successfully!",
+        });
+      } catch (error) {
+        setIsToastOpen({
+          isOpen: true,
+          message: `Error registering user: ${error.message}`,
+        });
+      }
+    },
+    onError: (error) => {
       setIsToastOpen({
         isOpen: true,
-        message: "You have been registered!",
+        message: `Error creating contact: ${error.message}`,
       });
     },
   });
 
-  const onSubmit = async (data) => {
-    try {
-      const nylasContact = mutation.mutate({
-        ...data,
-      });
-      // console.log(nylasContact, "nylasContact");
-      // const user = await registerParticipant(process.env.NEXT_PUBLIC_USER_ID, {
-      //   ...data,
-      //   // nylasContactId: nylasContact.id,
-      // });
-      // console.log(user, "signup");
-      // setGlobalContext((prev) => ({ ...prev, user }));
-
-      // setIsToastOpen({
-      //   isOpen: true,
-      //   message: "You have been registered!",
-      // });
-    } catch (error) {
-      console.error("Error signing up:", error);
-      setIsToastOpen({
-        isOpen: true,
-        message: "There has been an error.",
-      });
-    }
+  const onSubmit = (data) => {
+    mutation.mutate(data);
   };
 
   return (
@@ -144,9 +137,9 @@ export const UserSignup = () => {
       </div>
       <div>
         <TextField
-          label="Share 5 fun facts about yourself"
+          label="Share anything about yourself for your fellows Technonauts"
           {...register("notes", {
-            required: "The fun facts are required",
+            required: "This is required",
           })}
           error={!!errors.notes}
           InputLabelProps={{ shrink: true }}

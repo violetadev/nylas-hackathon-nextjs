@@ -26,7 +26,6 @@ export const EventsSummary: React.FC = () => {
 
   useEffect(() => {
     if (data && !globalContext?.upcomingEvents) {
-      console.log(data, "data");
       setGlobalContext((prev) => ({
         ...prev,
         upcomingEvents: formatEventsData(data, queryClient) || [],

@@ -57,7 +57,6 @@ export const Queue = () => {
       status === WebsocketStatus.INITIAL &&
       queueStatus === QueueStatus.READY
     ) {
-      console.log("in");
       connect();
       setQueueStatus(QueueStatus.OPEN);
     }
@@ -68,12 +67,7 @@ export const Queue = () => {
   }, [queueStatus]);
 
   useEffect(() => {
-    val && console.log(val, "val");
-  }, [val]);
-
-  useEffect(() => {
     if (status === WebsocketStatus.OPEN && queueStatus === QueueStatus.OPEN) {
-      console.log("going in the queue", val);
       setQueueStatus(QueueStatus.WAITING);
       const message = {
         email: storedUser?.email,

@@ -46,7 +46,7 @@ export const AddEvent = ({
     mutationFn: postEventsData,
     onSuccess: (response) => {
       if (response.data) {
-        queryClient.invalidateQueries({queryKey: ['calendar']});
+        queryClient.invalidateQueries({ queryKey: ["calendar"] });
         setIsToastOpen({
           isOpen: true,
           message: "The event has been added successfully",
@@ -69,7 +69,7 @@ export const AddEvent = ({
   };
   const { errors } = formState;
   const handleClose = () => closeModal();
-  console.log(mutation.status, "mutation.status");
+
   return (
     <div>
       <div ref={setContainer}></div>

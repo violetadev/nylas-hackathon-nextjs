@@ -32,11 +32,11 @@ export default function Login() {
   };
 
   useEffect(() => {
-    console.log(storedUser, "val");
     if (storedUser) {
       router.push("/event");
     }
   }, [storedUser]);
+
   return (
     <UserWrapper>
       <>

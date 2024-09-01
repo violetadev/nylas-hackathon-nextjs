@@ -55,23 +55,6 @@ export enum QueueStatus {
   WAITING = "waiting", // waiting for a 2nd person to join or be matched to
 }
 
-// export const mapStatus = (status: QueueStatus) => {
-//   console.log(readyState, ">red");
-//   switch (status) {
-//     case "OFFLINE":
-//       return "OFFLINE";
-//     case WebSocket.CONNECTING:
-//       return "CONNECTING";
-//     case WebSocket.CLOSING:
-//     case WebSocket.CLOSED:
-//       return "CLOSED";
-//     case "INITIAL":
-//     case WebSocket.OPEN:
-//     default:
-//       return "OPEN";
-//   }
-// };
-
 export const propsByStatus = {
   [QueueStatus.ERROR]: queueText.offline,
   [QueueStatus.MATCHED]: queueText.matched,
