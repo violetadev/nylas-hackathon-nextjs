@@ -1,14 +1,9 @@
-import { onAuthStateChanged, getIdToken, User, signOut } from "firebase/auth";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 import { useLocalStorage } from "react-use";
-import { auth } from "../lib/firebase.config";
-import { Box, Container } from "@mui/system";
-import { Button, Typography } from "@mui/material";
-import { UserLogin, UserSignup } from "../components/UserRegistration/";
+import { Box } from "@mui/system";
+import { Button } from "@mui/material";
 import { useGlobalContext } from "../context/globalContext";
 import { Queue } from "../components/Queue";
-import { VideoBackground } from "../components/VideoBackground/VideoBackground";
 import { UserWrapper } from "../components/UserWrapper";
 
 export default function Login() {
@@ -32,24 +27,33 @@ export default function Login() {
   return (
     <UserWrapper>
       <Box
+        component="main"
+        role="main"
         sx={{
           display: "flex",
-          justifyContent: "space-between",
-          flexFlow: "column",
-          minHeight: "90vh",
+          justifyContent: "center",
+          flexDirection: "column",
+          minHeight: "99vh",
+          alignItems: "center",
+          padding: "16px",
         }}
       >
         <Queue />
-        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-          <Button
-            variant="outlined"
-            onClick={handleLogout}
-            aria-label="LOGOUT"
-            sx={{ color: "white", backgroundColor: "black" }}
-          >
-            Logout
-          </Button>
-        </Box>
+        <Button
+          variant="outlined"
+          onClick={handleLogout}
+          aria-label="Logout"
+          sx={{
+            fontSize: "8pt",
+            maxWidth: "100px",
+            marginBottom: "8vh",
+            right: "20px",
+            bottom: "-32px",
+            position: "fixed",
+          }}
+        >
+          Logout
+        </Button>
       </Box>
     </UserWrapper>
   );

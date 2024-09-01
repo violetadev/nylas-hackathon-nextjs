@@ -11,6 +11,8 @@ import {
   TypographyTitleCustomCss,
 } from "../CustomTypography/Customizations";
 import { TruncatedText } from "../TruncatedText";
+import theme from "../../styles";
+import { useRouter } from "next/router";
 
 type BasicCardType = {
   description?: string;
@@ -25,6 +27,8 @@ export const AppointmentCard = ({
   title,
   actions,
 }: BasicCardType) => {
+  const router = useRouter();
+
   const descriptionText = description || "New Event";
   return (
     <Card sx={{ minWidth: "100%" }}>
@@ -53,7 +57,7 @@ export const AppointmentCard = ({
                   ...TypographyTitleCustomCss,
                   fontSize: "14px",
                   color: !description
-                    ? "#5A716A"
+                    ? theme.palette.primary.main
                     : TypographyTitleCustomCss.color,
                 }}
               />
@@ -70,9 +74,9 @@ export const AppointmentCard = ({
           }}
         >
           <AppointmentCardInfo title={title} date={date} />
-          {actions && actions.length > 0 && (
-            <AppointmentCardActions actions={actions} />
-          )}
+          {router.pathname === "/admin/events" &&
+            actions &&
+            actions.length > 0 && <AppointmentCardActions actions={actions} />}
         </Box>
       </CardContent>
     </Card>

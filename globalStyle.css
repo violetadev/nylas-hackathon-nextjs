@@ -1,0 +1,10 @@
+body {
+  text-shadow: 0 0 0.57px #a9a59ec3,0 0 0.5px #7F7F7FAA,0 0 0.38px #31302e3a !important;
+  -webkit-text-stroke: 0.08px currentcolor !important;
+  font-feature-settings: "liga" 0 !important;
+  font-variant: no-common-ligatures proportional-nums !important;
+  font-optical-sizing: auto !important;
+  font-kerning: auto !important;
+  text-rendering: optimizeLegibility !important;
+  font-family: "Roboto, sans-serif"
+}

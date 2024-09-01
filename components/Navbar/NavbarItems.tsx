@@ -16,6 +16,7 @@ const navigationLinks = [
   { label: "Home", to: "/admin" },
   { label: "Events", to: "/admin/events" },
   { label: "Participants", to: "/admin/participants" },
+  { label: "Event", to: "/event" },
 ];
 
 export const NavbarDrawer: React.FC<NavbarDrawerProps> = ({
@@ -61,6 +62,7 @@ export const NavbarDrawer: React.FC<NavbarDrawerProps> = ({
     <Drawer open={open} onClose={onClose}>
       <DialogContent
         sx={{
+          background: "#03070a",
           width: "20vw",
           display: "flex",
           flexFlow: "column wrap",
@@ -84,6 +86,7 @@ export const NavbarDrawer: React.FC<NavbarDrawerProps> = ({
           display: "flex",
           gap: 1,
           p: 1.5,
+          background: "#03070a",
           pb: 2,
           borderTop: "1px solid",
           borderColor: "divider",

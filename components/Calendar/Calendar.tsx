@@ -12,6 +12,7 @@ import { useGlobalContext } from "../../context/globalContext";
 import { getDaysArray } from "../../helpers/helpers";
 import { Box } from "@mui/system";
 import { fetchEventsByMonth } from "../../fetch/helpers";
+import theme from "../../styles";
 
 const initialValue = dayjs(new Date());
 
@@ -30,6 +31,7 @@ function ServerDay(
       badgeContent={isSelected ? "🟢" : undefined}
     >
       <PickersDay
+        sx={{ background: "#191e1e", paddingBottom: "0" }}
         {...other}
         outsideCurrentMonth={outsideCurrentMonth}
         day={day}
@@ -84,6 +86,9 @@ export const Calendar = ({ onDateSelector }: CalendarProps) => {
         <DateCalendar
           sx={{
             width: "inherit",
+            background: "#090b0b",
+            borderRadius: "12px",
+            padding: "14px",
           }}
           defaultValue={initialValue}
           loading={isLoading}

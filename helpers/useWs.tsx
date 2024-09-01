@@ -13,16 +13,19 @@ export const useWs = ({ url }: { url: string }) => {
     WebsocketStatus.INITIAL
   );
   const [val, setVal] = useState<any>(null);
+  const [error, setError] = useState<null | boolean>(null);
 
   const ws = useRef<null | WebSocket>(null);
 
   const connect = () => {
-    console.log("in connect");
+    setError(null);
+
     setStatus(WebsocketStatus.CONNECTING);
     const socket = new WebSocket(url);
 
     socket.onopen = () => setStatus(WebsocketStatus.OPEN);
     socket.onclose = () => setStatus(WebsocketStatus.CLOSED);
+    socket.onerror = () => setError(true);
     socket.onmessage = (event) => setVal(event.data);
 
     ws.current = socket;
@@ -31,6 +34,7 @@ export const useWs = ({ url }: { url: string }) => {
   const disconnect = () => {
     if (ws.current) {
       setStatus(WebsocketStatus.CLOSING);
+      setError(null);
       ws.current.close();
     }
   };
@@ -43,5 +47,5 @@ export const useWs = ({ url }: { url: string }) => {
     }
   };
 
-  return { status, val, connect, disconnect, sendMessage };
+  return { status, val, error, connect, disconnect, sendMessage };
 };

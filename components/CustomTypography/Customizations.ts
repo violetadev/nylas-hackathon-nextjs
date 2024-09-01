@@ -1,9 +1,9 @@
 import theme from "../../styles";
 
 export const TypographySubtitleCustomCss = {
-  color: theme.palette.common.black,
+  color: theme.palette.common.white,
   fontWeight: 100,
-  fontSize: "10px",
+  fontSize: "12px",
 };
 
 export const TypographyTitleCustomCss = {

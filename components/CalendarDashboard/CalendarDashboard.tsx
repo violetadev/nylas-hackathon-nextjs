@@ -96,8 +96,16 @@ export const CalendarDashboard = () => {
         },
       }}
     >
-      <AppointmentCardList appointments={globalContext?.selectedDatesEvents} />
+      {globalContext?.selectedDatesEvents ? (
+        <AppointmentCardList
+          appointments={globalContext?.selectedDatesEvents}
+        />
+      ) : (
+        <Loading />
+      )}
       <Box
+        component="section"
+        aria-labelledby="calendar-section"
         sx={{
           display: "flex",
           flexFlow: "column wrap",
@@ -108,6 +116,7 @@ export const CalendarDashboard = () => {
           onClick={() => setOpenEventModal(true)}
           variant="outlined"
           sx={{ justifySelf: "flex-end", margin: "8px", maxWidth: "200px" }}
+          aria-label="Add a new event"
         >
           Add Event
         </Button>
@@ -115,7 +124,10 @@ export const CalendarDashboard = () => {
           isOpen={openEventModal}
           closeModal={() => setOpenEventModal(false)}
         />
-        <Calendar onDateSelector={handleDateChange} />
+        <Calendar
+          onDateSelector={handleDateChange}
+          aria-label="Select a date from the calendar"
+        />
       </Box>
     </Container>
   );

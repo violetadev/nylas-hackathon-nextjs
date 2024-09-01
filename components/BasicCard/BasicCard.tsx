@@ -21,8 +21,8 @@ export const BasicCard = ({
   return (
     <Card
       sx={{
-        minWidth: "30vw",
-        maxWidth: "30vw",
+        minWidth: "20vw",
+        maxWidth: "20vw",
         paddingBottom: "12px",
         cursor: "pointer",
       }}

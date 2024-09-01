@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchCalendarData, fetchUserData } from "../../fetch/helpers";
 import { Typography } from "@mui/material";
 import { AdminWrapper } from "../../components/AdminWrapper";
+import { Loading } from "../../components/Loading";
 
 export default function Index() {
   const { globalContext, setGlobalContext } = useGlobalContext();
@@ -36,7 +37,7 @@ export default function Index() {
     }
   }, [calendar, setGlobalContext]);
 
-  if (isUserLoading || isCalendarLoading) return <div>Loading data...</div>;
+  if (isUserLoading || isCalendarLoading) return <Loading />;
 
   return (
     <AdminWrapper>

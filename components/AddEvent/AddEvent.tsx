@@ -46,7 +46,7 @@ export const AddEvent = ({
     mutationFn: postEventsData,
     onSuccess: (response) => {
       if (response.data) {
-        queryClient.invalidateQueries(["calendar"]);
+        queryClient.invalidateQueries({queryKey: ['calendar']});
         setIsToastOpen({
           isOpen: true,
           message: "The event has been added successfully",

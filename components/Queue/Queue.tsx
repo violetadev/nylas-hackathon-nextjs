@@ -13,7 +13,7 @@ export const Queue = () => {
   const [queueStatus, setQueueStatus] = useState<QueueStatus>(
     QueueStatus.READY
   );
-  const { status, val, connect, disconnect, sendMessage } = useWs({
+  const { status, val, connect, error, disconnect, sendMessage } = useWs({
     url: "ws://localhost:3000",
   });
 
@@ -78,17 +78,32 @@ export const Queue = () => {
       {!content ? (
         <Loading />
       ) : (
-        <>
-          <Typography variant="h1" sx={{ fontSize: "60pt", color: "white" }}>
-            {content.title}
+        <Box
+          sx={{ display: "flex", justifyContent: "center", flexFlow: "column" }}
+        >
+          <Typography
+            variant="h1"
+            sx={{ fontSize: "60pt", color: "white", marginBottom: "24px" }}
+          >
+            {error ? queueText.offline.title : content.title}
           </Typography>
-          <Typography variant="body1">{content.subtitle}</Typography>
+          <Typography
+            variant="body1"
+            sx={{ marginBottom: "48px", color: "#ffffff79" }}
+          >
+            {content.subtitle}
+          </Typography>
           {!val?.includes("link") && (
             <Button
               id="joinQueueButton"
               onClick={handleJoinWaitlist}
               variant="contained"
-              sx={{ backgroundColor: "white", color: "black", margin: "24px" }}
+              sx={{
+                margin: "24px",
+                fontWeight: "800",
+                maxWidth: "200px",
+                alignSelf: "center",
+              }}
               aria-label={content.button.text}
               disabled={content.button.disabled}
             >
@@ -97,8 +112,12 @@ export const Queue = () => {
             </Button>
           )}
           {val && <TechnonautMatch val={JSON.parse(val)} />}
-          <p id="status">Status: {content.status}</p>
-        </>
+          <Typography variant="body2" sx={{ color: "#ffffff5f" }}>
+            {error
+              ? "The ship is not ready, come back later"
+              : `Status: ${content.status} `}
+          </Typography>
+        </Box>
       )}
     </Box>
   );
