@@ -6,10 +6,13 @@ import { propsByStatus, QueueStatus, queueText } from "./constants";
 import { useLocalStorage } from "react-use";
 import { Loading } from "../Loading";
 import { TechnonautMatch } from "../Technonaut";
+import { fetchEventsByMonth } from "../../fetch/helpers";
+import dayjs from "dayjs";
 
 export const Queue = () => {
   const [storedUser, setStoredUser] = useLocalStorage<any>("user", null);
   const [content, setContent] = useState<any>(null);
+  const [eventsAvailable, setEventsAvailable] = useState(false);
   const [queueStatus, setQueueStatus] = useState<QueueStatus>(
     QueueStatus.READY
   );
@@ -17,7 +20,39 @@ export const Queue = () => {
     url: "ws://localhost:3000",
   });
 
-  const handleJoinWaitlist = () => {
+  const checkForCurrentEvents = async () => {
+    try {
+      const events = await fetchEventsByMonth(
+        dayjs(new Date()).format("YYYY-MM")
+      );
+
+      if (!events) {
+        return false;
+      }
+
+      const currentTimestamp = Math.floor(Date.now() / 1000);
+      const ongoingEvents = events.filter((event: any) => {
+        const start = event.when.start_time;
+        const end = event.when.end_time;
+        return currentTimestamp >= start && currentTimestamp <= end;
+      });
+
+      return ongoingEvents.length > 0;
+    } catch (e) {
+      setQueueStatus(QueueStatus.ERROR);
+      return false;
+    }
+  };
+
+  const handleJoinWaitlist = async () => {
+    const hasEvents = await checkForCurrentEvents();
+    setEventsAvailable(hasEvents);
+
+    if (!hasEvents) {
+      setQueueStatus(QueueStatus.OFFLINE);
+      return;
+    }
+
     if (
       status === WebsocketStatus.INITIAL &&
       queueStatus === QueueStatus.READY
