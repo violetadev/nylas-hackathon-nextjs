@@ -17,8 +17,11 @@ export const Queue = () => {
     QueueStatus.READY
   );
   const { status, val, connect, error, disconnect, sendMessage } = useWs({
-    url: process.env.NEXT_PUBLIC_WEBSOCKETS_SERVER || "",
+    url:
+      process.env.NEXT_PUBLIC_WEBSOCKETS_SERVER ||
+      "wss://feline-sprinkle-knuckle.glitch.me/",
   });
+  console.log(process.env.NEXT_PUBLIC_WEBSOCKETS_SERVER, "process");
 
   const checkForCurrentEvents = async () => {
     try {
@@ -142,7 +145,7 @@ export const Queue = () => {
           )}
           {val && <TechnonautMatch val={JSON.parse(val)} />}
           <Typography variant="body2" sx={{ color: "#ffffff5f" }}>
-            {error
+            {!eventsAvailable || error
               ? "The ship is not ready, come back later"
               : `Status: ${content.status} `}
           </Typography>
