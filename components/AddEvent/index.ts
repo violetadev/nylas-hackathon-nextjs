@@ -1,1 +1,1 @@
-export { AddService } from "./AddService";
+export { AddEvent } from "./AddEvent";

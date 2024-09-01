@@ -31,7 +31,7 @@ export const UserLogin = ({ setStoredUser, storedUser }: any) => {
         data.passcode
       );
 
-      if (!user?.id) {
+      if (!user) {
         throw new Error("No User Found");
       }
 
