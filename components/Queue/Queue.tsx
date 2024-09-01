@@ -17,11 +17,8 @@ export const Queue = () => {
     QueueStatus.READY
   );
   const { status, val, connect, error, disconnect, sendMessage } = useWs({
-    url:
-      process.env.NEXT_PUBLIC_WEBSOCKETS_SERVER ||
-      "wss://feline-sprinkle-knuckle.glitch.me/",
+    url: process.env.NEXT_PUBLIC_WEBSOCKETS_SERVER || "",
   });
-  console.log(process.env.NEXT_PUBLIC_WEBSOCKETS_SERVER, "process");
 
   const checkForCurrentEvents = async () => {
     try {
