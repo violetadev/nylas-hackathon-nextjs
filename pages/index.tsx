@@ -40,7 +40,14 @@ export default function Login() {
             variant="outlined"
             onClick={handleLogout}
             aria-label="LOGOUT"
-            sx={{ color: "white", backgroundColor: "black" }}
+            sx={{
+              fontSize: "8pt",
+              zIndex: "999",
+              maxWidht: "100px",
+              marginTop: "0",
+              marginLeft: "20px",
+              position: "fixed",
+            }}
           >
             Logout
           </Button>
