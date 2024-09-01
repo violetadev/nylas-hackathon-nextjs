@@ -1,0 +1,1 @@
+export { CustomTypography } from "./CustomTypography";

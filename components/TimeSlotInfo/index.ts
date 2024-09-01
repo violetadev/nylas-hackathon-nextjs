@@ -1,0 +1,1 @@
+export { TimeSlotInfo } from './TimeSlotInfo'
