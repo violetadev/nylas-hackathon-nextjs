@@ -49,7 +49,7 @@ export const Queue = () => {
   const handleJoinWaitlist = async () => {
     const currentEvent = await checkForCurrentEvents();
     setEventAvailable(currentEvent);
-    console.log(currentEvent, "curr");
+    
     if (!currentEvent) {
       setQueueStatus(QueueStatus.OFFLINE);
       return;
@@ -146,7 +146,7 @@ export const Queue = () => {
             <TechnonautMatch
               matchData={JSON.parse(val)}
               userNotes={storedUser?.notes || ""}
-              eventDescription={eventAvailable?.description}
+              eventDescription={eventAvailable?.description || ""}
             />
           )}
           <Typography variant="body2" sx={{ color: "#ffffff5f" }}>

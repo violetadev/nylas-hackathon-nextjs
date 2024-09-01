@@ -18,13 +18,13 @@ export default async function handler(req, res) {
   if (req.method === "POST") {
     const { eventDescription, user1Notes, user2Notes } = req.body;
 
-    const prompt = `Event: ${eventDescription}, Person 1: ${user1Notes}, Person 2: ${user2Notes}. Generate 5 icebreaker questions for their first time meeting.`;
+    const prompt = `Event: ${eventDescription}, Person 1: ${user1Notes}, Person 2: ${user2Notes}. Generate 5 icebreaker questions (45 characters or less) for their first time meeting`;
 
     try {
       const response = await openai.chat.completions.create({
         model: "gpt-3.5-turbo",
         messages: [{ role: "user", content: prompt }],
-        max_tokens: 50,
+        max_tokens: 150,
       });
 
       console.log(response, "OpenAI response");

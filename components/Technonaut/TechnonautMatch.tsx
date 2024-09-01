@@ -1,8 +1,11 @@
-import { Button, Typography } from "@mui/material";
+import { Button, Chip, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useMutation } from "@tanstack/react-query";
 import { getIcebreakerQuestions } from "../../fetch/helpers";
 import { useEffect, useState } from "react";
+import { Loading } from "../Loading";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
 
 type TechnonautMatchProps = {
   matchData: {
@@ -39,6 +42,7 @@ export const TechnonautMatch = ({
     onSuccess: (data) => {
       console.log("Icebreaker questions:", data);
       setIcebreakers(data);
+      console.log(data[0].split(", "), data[0]);
     },
     onError: (error) => {
       console.error("Error fetching icebreaker questions:", error);
@@ -70,7 +74,23 @@ export const TechnonautMatch = ({
         <Typography variant="body1">
           Here are some questions you can ask your fellow Technonaut:
         </Typography>
-        {/* <Typography variant="body2">{icebreakers[0]}</Typography> */}
+        <Typography variant="body2">
+          {isLoading && <Loading />}
+          <List disablePadding sx={{ marginTop: "24px" }}>
+            {icebreakers?.map((icebreaker: string, index: number) => (
+              <ListItem
+                key={index}
+                sx={{
+                  display: "flex",
+                  flexFlow: "column",
+                  justifyContent: "center",
+                }}
+              >
+                <Chip label={icebreaker} variant="filled" />
+              </ListItem>
+            ))}
+          </List>
+        </Typography>
       </Box>
       <Button
         onClick={handleJoinMeeting}
