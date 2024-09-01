@@ -17,7 +17,7 @@ export const Queue = () => {
     QueueStatus.READY
   );
   const { status, val, connect, error, disconnect, sendMessage } = useWs({
-    url: "ws://localhost:3000",
+    url: process.env.NEXT_PUBLIC_WEBSOCKETS_SERVER || "",
   });
 
   const checkForCurrentEvents = async () => {
