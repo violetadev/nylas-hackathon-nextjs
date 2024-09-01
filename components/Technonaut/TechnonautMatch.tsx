@@ -3,7 +3,6 @@ import { Box } from "@mui/system";
 import { useMutation } from "@tanstack/react-query";
 import { getIcebreakerQuestions } from "../../fetch/helpers";
 import { useEffect, useState } from "react";
-import { Loading } from "../Loading";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 
@@ -30,7 +29,6 @@ export const TechnonautMatch = ({
   const {
     mutate,
     data: questions,
-    isLoading,
     isError,
   } = useMutation({
     mutationFn: async () =>
@@ -75,7 +73,6 @@ export const TechnonautMatch = ({
           Here are some questions you can ask your fellow Technonaut:
         </Typography>
         <Typography variant="body2">
-          {isLoading && <Loading />}
           <List disablePadding sx={{ marginTop: "24px" }}>
             {icebreakers?.map((icebreaker: string, index: number) => (
               <ListItem
