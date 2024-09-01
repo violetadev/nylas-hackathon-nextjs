@@ -12,7 +12,7 @@ import dayjs from "dayjs";
 export const Queue = () => {
   const [storedUser, setStoredUser] = useLocalStorage<any>("user", null);
   const [content, setContent] = useState<any>(null);
-  const [eventsAvailable, setEventsAvailable] = useState(false);
+  const [eventAvailable, setEventAvailable] = useState<any>(null);
   const [queueStatus, setQueueStatus] = useState<QueueStatus>(
     QueueStatus.READY
   );
@@ -37,18 +37,20 @@ export const Queue = () => {
         return currentTimestamp >= start && currentTimestamp <= end;
       });
 
-      return ongoingEvents.length > 0;
+      return ongoingEvents.length > 0
+        ? ongoingEvents.find((event) => !event.conferencing?.length)
+        : null;
     } catch (e) {
       setQueueStatus(QueueStatus.ERROR);
-      return false;
+      return null;
     }
   };
 
   const handleJoinWaitlist = async () => {
-    const hasEvents = await checkForCurrentEvents();
-    setEventsAvailable(hasEvents);
-
-    if (!hasEvents) {
+    const currentEvent = await checkForCurrentEvents();
+    setEventAvailable(currentEvent);
+    console.log(currentEvent, "curr");
+    if (!currentEvent) {
       setQueueStatus(QueueStatus.OFFLINE);
       return;
     }
@@ -140,9 +142,15 @@ export const Queue = () => {
               {val?.includes("Matched")}
             </Button>
           )}
-          {val && <TechnonautMatch val={JSON.parse(val)} />}
+          {val && (
+            <TechnonautMatch
+              matchData={JSON.parse(val)}
+              userNotes={storedUser?.notes || ""}
+              eventDescription={eventAvailable?.description}
+            />
+          )}
           <Typography variant="body2" sx={{ color: "#ffffff5f" }}>
-            {!eventsAvailable || error
+            {error
               ? "The ship is not ready, come back later"
               : `Status: ${content.status} `}
           </Typography>

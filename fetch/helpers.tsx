@@ -128,3 +128,29 @@ export const createContact = async ({ givenName, surname, email, notes }) => {
 
   return response.json();
 };
+
+export const getIcebreakerQuestions = async (
+  eventDescription: string = "",
+  user1Notes: string,
+  user2Notes: string
+) => {
+  try {
+    const response = await fetch("/api/generateQuestions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        eventDescription,
+        user1Notes,
+        user2Notes,
+      }),
+    });
+
+    const data = await response.json();
+    return data.questions;
+  } catch (error) {
+    console.error("Error fetching icebreaker questions:", error);
+    return [];
+  }
+};

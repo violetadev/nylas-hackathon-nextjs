@@ -1,12 +1,57 @@
 import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import { useMutation } from "@tanstack/react-query";
+import { getIcebreakerQuestions } from "../../fetch/helpers";
+import { useEffect, useState } from "react";
 
-export const TechnonautMatch = ({ val }: any) => {
-  const { matchedWith, link } = val;
+type TechnonautMatchProps = {
+  matchData: {
+    link: string;
+    matchedWith: {
+      notes: string;
+      name: string;
+    };
+  };
+  userNotes: string;
+  eventDescription: string;
+};
+
+export const TechnonautMatch = ({
+  matchData,
+  userNotes,
+  eventDescription,
+}: TechnonautMatchProps) => {
+  const { matchedWith, link } = matchData;
+  const [icebreakers, setIcebreakers] = useState<any>([""]);
+
+  const {
+    mutate,
+    data: questions,
+    isLoading,
+    isError,
+  } = useMutation({
+    mutationFn: async () =>
+      await getIcebreakerQuestions(
+        eventDescription,
+        matchedWith.notes,
+        userNotes
+      ),
+    onSuccess: (data) => {
+      console.log("Icebreaker questions:", data);
+      setIcebreakers(data);
+    },
+    onError: (error) => {
+      console.error("Error fetching icebreaker questions:", error);
+    },
+  });
 
   const handleJoinMeeting = () => {
     window.open(link, "_blank");
   };
+
+  useEffect(() => {
+    mutate();
+  }, [mutate]);
 
   return (
     <Box
@@ -23,9 +68,9 @@ export const TechnonautMatch = ({ val }: any) => {
           You will be meeting with {matchedWith?.name}
         </Typography>
         <Typography variant="body1">
-          Something you should know about your fellow Technonaut:
+          Here are some questions you can ask your fellow Technonaut:
         </Typography>
-        <Typography variant="body2">{matchedWith?.notes}</Typography>
+        {/* <Typography variant="body2">{icebreakers[0]}</Typography> */}
       </Box>
       <Button
         onClick={handleJoinMeeting}
