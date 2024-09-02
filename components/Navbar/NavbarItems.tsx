@@ -16,7 +16,7 @@ const navigationLinks = [
   { label: "Home", to: "/admin" },
   { label: "Events", to: "/admin/events" },
   { label: "Participants", to: "/admin/participants" },
-  { label: "Event", to: "/event" },
+  { label: "Event", to: "/" },
 ];
 
 export const NavbarDrawer: React.FC<NavbarDrawerProps> = ({

@@ -33,7 +33,7 @@ export default function Login() {
 
   useEffect(() => {
     if (storedUser) {
-      router.push("/event");
+      router.push("/");
     }
   }, [storedUser]);
 
