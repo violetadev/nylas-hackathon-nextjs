@@ -85,24 +85,32 @@ export const CalendarDashboard = () => {
   return (
     <Container
       sx={{
-        display: "grid",
-        gridTemplateColumns: "3fr 1fr",
-        gap: "16px",
+        display: "flex",
+        flexFlow: "row wrap",
+        marginBottom: "48px",
+        justifyContent: "space-between",
         height: "100vh",
         "@media (max-width: 768px)": {
-          gridTemplateColumns: "1fr",
-          gridTemplateRows: "auto auto",
-          height: "auto",
+          flexFlow: "row wrap-reverse",
         },
       }}
     >
-      {globalContext?.selectedDatesEvents ? (
-        <AppointmentCardList
-          appointments={globalContext?.selectedDatesEvents}
-        />
-      ) : (
-        <Loading />
-      )}
+      <Box
+        sx={{
+          maxWidth: "50vw",
+          "@media (max-width: 768px)": {
+            maxWidth: "100%",
+          },
+        }}
+      >
+        {globalContext?.selectedDatesEvents ? (
+          <AppointmentCardList
+            appointments={globalContext?.selectedDatesEvents}
+          />
+        ) : (
+          <Loading />
+        )}
+      </Box>
       <Box
         component="section"
         aria-labelledby="calendar-section"
@@ -112,14 +120,18 @@ export const CalendarDashboard = () => {
           alignItems: "flex-end",
         }}
       >
-        <Button
-          onClick={() => setOpenEventModal(true)}
-          variant="outlined"
-          sx={{ justifySelf: "flex-end", margin: "8px", maxWidth: "200px" }}
-          aria-label="Add a new event"
+        <Box
+          sx={{ display: "flex", flexFlow: "column", justifyContent: "center" }}
         >
-          Add Event
-        </Button>
+          <Button
+            onClick={() => setOpenEventModal(true)}
+            variant="outlined"
+            sx={{ justifySelf: "flex-end", margin: "8px", maxWidth: "200px" }}
+            aria-label="Add a new event"
+          >
+            Add Event
+          </Button>
+        </Box>
         <AddEvent
           isOpen={openEventModal}
           closeModal={() => setOpenEventModal(false)}
