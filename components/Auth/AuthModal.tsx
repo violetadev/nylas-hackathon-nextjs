@@ -34,22 +34,31 @@ export const AuthModal = ({
         <Modal
           open={isOpen}
           onClose={handleClose}
-          aria-labelledby="modal-title"
-          aria-describedby="modal-description"
+          aria-labelledby="auth modal"
+          aria-describedby="auth modal to sign up and log in"
         >
           <Box sx={style}>
             <div>
               {step === "login" && (
                 <div>
                   <Login />{" "}
-                  <Typography variant="h4" onClick={() => setStep("signup")}>
+                  <Typography
+                    variant="h4"
+                    onClick={() => setStep("signup")}
+                    aria-label="Switch to sign up form"
+                  >
                     Sign up
                   </Typography>
                 </div>
               )}
               {step === "signup" && <Signup />}
             </div>
-            <Button onClick={handleClose} sx={{ mt: 2 }} variant="contained">
+            <Button
+              onClick={handleClose}
+              sx={{ mt: 2 }}
+              variant="contained"
+              aria-label="Close authentication modal"
+            >
               Close
             </Button>
           </Box>

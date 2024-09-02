@@ -59,7 +59,11 @@ export const NavbarDrawer: React.FC<NavbarDrawerProps> = ({
   };
 
   return (
-    <Drawer open={open} onClose={onClose}>
+    <Drawer
+      open={open}
+      onClose={onClose}
+      PaperProps={{ role: "navigation", "aria-label": "Navigation Drawer" }}
+    >
       <DialogContent
         sx={{
           background: "#03070a",
@@ -76,6 +80,7 @@ export const NavbarDrawer: React.FC<NavbarDrawerProps> = ({
             key={item.label}
             onClick={() => handleRedirect(item.to)}
             variant="text"
+            aria-label={`Navigate to ${item.label}`}
           >
             {item.label}
           </Button>
@@ -95,12 +100,16 @@ export const NavbarDrawer: React.FC<NavbarDrawerProps> = ({
         }}
       >
         {user ? (
-          <Button variant="outlined" onClick={handleLogout}>
+          <Button variant="outlined" aria-label="Logout" onClick={handleLogout}>
             Logout
           </Button>
         ) : (
           <>
-            <Button variant="outlined" onClick={() => setOpen(true)}>
+            <Button
+              variant="outlined"
+              onClick={() => setOpen(true)}
+              aria-label="Login or Sign Up"
+            >
               Login/Sign Up
             </Button>
             <AuthModal isOpen={isOpen} closeModal={handleCloseModal} />
