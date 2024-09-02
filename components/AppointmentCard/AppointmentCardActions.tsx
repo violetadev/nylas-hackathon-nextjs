@@ -10,7 +10,7 @@ export const AppointmentCardActions = ({
   return (
     <Box sx={{ display: "flex", marginLeft: "4px", alignItems: "center" }}>
       {actions.map((item) => (
-        <div onClick={item.fn} key={item.label}>
+        <div onClick={item.fn} key={item.label} aria-label={item.label}>
           {item.icon}
         </div>
       ))}

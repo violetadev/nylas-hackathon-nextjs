@@ -31,7 +31,12 @@ export const AppointmentCard = ({
 
   const descriptionText = description || "New Event";
   return (
-    <Card sx={{ minWidth: "100%" }}>
+    <Card
+      sx={{ minWidth: "100%" }}
+      role="region"
+      aria-labelledby="appointment-card-title"
+      aria-describedby="appointment-card-description"
+    >
       <CardContent
         sx={{
           display: "flex",

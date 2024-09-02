@@ -23,7 +23,9 @@ export const MiniCardInfo = ({ label, text, icon, handleClick }: TimeInfo) => {
         margin: "8px",
       }}
     >
-      <IconButton size="medium">{icon}</IconButton>
+      <IconButton size="medium" aria-label={label}>
+        {icon}
+      </IconButton>
       <div>
         <CustomTypography
           text={label}
